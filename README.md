@@ -11,9 +11,9 @@ Import this repository and deploy `main`. Settings are supplied in `netlify.toml
 - Functions: `netlify/functions`
 - Node: 22; no npm dependencies
 
-The hosted chatbot uses [Netlify AI Gateway](https://docs.netlify.com/build/ai-gateway/overview/) with [Qwen3.5-9B](https://huggingface.co/Qwen/Qwen3.5-9B) through OpenRouter. No visitor login or model download is required. Gateway access requires a credit-based Netlify plan, enabled AI features and at least one production deploy. It uses the site owner's Netlify credits; it is not unlimited free inference. Check AI Gateway usage and budget in Netlify.
+The hosted chatbot uses [Groq](https://console.groq.com/docs/models) with `openai/gpt-oss-20b` when `GROQ_API_KEY` is set. Add that key privately in Netlify's project environment variables, then redeploy. This works on the existing Free Legacy plan; no Netlify plan change is required. No visitor login or model download is needed. Groq account quotas and rate limits apply. Optional `GROQ_MODEL` selects another compatible Groq model.
 
-Netlify injects `OPENROUTER_API_KEY` and `OPENROUTER_BASE_URL` into the function runtime. Do not put keys in frontend files. Existing provider environment variables take precedence over Gateway values. Alternatively, set both variables privately in Netlify for your own OpenRouter account (`OPENROUTER_BASE_URL=https://openrouter.ai/api/v1`). Optional `CHAT_MODEL` overrides the default `qwen/qwen3.5-9b`; verify provider availability before changing it.
+If no Groq key is set, the existing OpenRouter/Netlify AI Gateway option remains available using `OPENROUTER_API_KEY` and `OPENROUTER_BASE_URL`. Netlify only injects Gateway credentials on credit-based plans with AI features enabled and a production deploy. Gateway usage consumes Netlify credits. Optional `CHAT_MODEL` overrides the OpenRouter default `qwen/qwen3.5-9b`. Never put provider keys in frontend files or Git.
 
 Use a Git-connected deployment to include the function. Uploading only `dist` to Netlify Drop or GitHub Pages provides the website and curated guide answers, without hosted AI.
 
@@ -33,4 +33,4 @@ npm run check
 npm run preview
 ```
 
-Open the printed localhost URL. Rebuild after edits. Local preview serves `/api/chat` with the same handler; without private provider environment variables it intentionally uses guide answers. Tests mock hosted inference and cover routing, grounding, validation, failure handling and cancellation. A live hosted answer must be checked after Netlify deployment with Gateway access.
+Open the printed localhost URL. Rebuild after edits. Local preview serves `/api/chat` with the same handler; without private provider environment variables it intentionally uses guide answers. Tests mock hosted inference and cover provider selection, routing, grounding, validation, rate limits, failure handling and cancellation. Check a live AI answer after deployment with the private Groq key configured.

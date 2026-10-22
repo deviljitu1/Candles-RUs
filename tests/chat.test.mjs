@@ -63,6 +63,36 @@ test('server guards business and material limits without calling the model', asy
   }
 });
 
+test('Groq runs with only its private key and takes precedence over gateway configuration', async () => {
+  for (const settings of [{ GROQ_API_KEY: 'groq-test-key' }, { ...env, GROQ_API_KEY: 'groq-test-key', GROQ_MODEL: 'openai/gpt-oss-120b' }]) {
+    let upstream;
+    const handler = createChatHandler({ env: settings, siteContext: 'Current academy page.', fetcher: async (url, options) => {
+      upstream = { url, ...options, payload: JSON.parse(options.body) };
+      return Response.json({ choices: [{ message: { content: 'Keep your workspace organised.', reasoning: 'Never expose this.' } }] });
+    } });
+    assert.deepEqual(await (await handler(new Request('https://academy.example/api/chat'))).json(), { available: true });
+    const response = await handler(request(message('How can I organise my workspace?')));
+    const result = await response.json();
+    assert.equal(result.mode, 'ai');
+    assert.equal(upstream.url, 'https://api.groq.com/openai/v1/chat/completions');
+    assert.equal(upstream.headers.Authorization, 'Bearer groq-test-key');
+    assert.equal(upstream.payload.model, settings.GROQ_MODEL || 'openai/gpt-oss-20b');
+    assert.equal(upstream.payload.include_reasoning, false);
+    assert.equal(upstream.payload.reasoning_effort, 'low');
+    assert.equal(upstream.payload.max_completion_tokens, 1024);
+    assert.equal(upstream.payload.reasoning, undefined);
+    assert.match(upstream.payload.messages[0].content, /Current academy page/);
+    assert.doesNotMatch(JSON.stringify(result), /groq-test-key|Never expose/);
+  }
+});
+
+test('provider rate limits are handled without exposing upstream details', async () => {
+  const handler = createChatHandler({ env: { GROQ_API_KEY: 'groq-test-key' }, fetcher: async () => new Response('Private account limits', { status: 429 }) });
+  const response = await handler(request(message('How can I organise my workspace?')));
+  assert.equal(response.status, 429);
+  assert.doesNotMatch(await response.text(), /Private account|groq-test-key/);
+});
+
 test('unconfigured and failed services are explicit and never leak provider errors or credentials', async () => {
   const unconfigured = createChatHandler({ env: {} });
   assert.deepEqual(await (await unconfigured(new Request('https://academy.example/api/chat'))).json(), { available: false });
