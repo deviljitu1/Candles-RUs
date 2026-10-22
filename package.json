@@ -1,0 +1,14 @@
+{
+  "name": "candles-rus-academy",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Candles RUs Academy PDF guides and 1:1 learning website",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/preview.mjs",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "check": "node --check academy.js && node --check chatbot.js && node --check chat-provider.js && node --check chat-knowledge.js && node --check server/chat-handler.js && node --check netlify/functions/chat.mjs && npm test"
+  }
+}

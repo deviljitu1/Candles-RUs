@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.generated/
+.source/
+previews/
+.preview.cjs
+*.zip
+.env
+.env.*
+.DS_Store

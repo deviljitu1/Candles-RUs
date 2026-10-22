@@ -1,0 +1,39 @@
+#academy-chat{position:fixed;right:max(22px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));z-index:60;font:400 14px/1.5 var(--text);color:var(--ink)}
+#academy-chat button{font:600 13px/1.4 var(--display)}
+#academy-chat .ach-launcher{display:flex;align-items:center;gap:10px;min-height:56px;padding:14px 21px;background:var(--ink);color:var(--light);border:2px solid var(--amber);border-radius:999px;box-shadow:0 5px 18px #21244530;transition:transform .2s ease-out,background .2s}
+#academy-chat .ach-launcher:hover{background:#30345d;transform:translateY(-2px)}
+.ach-launcher svg{width:25px;height:25px;color:var(--amber)}
+.ach-panel{position:absolute;right:0;bottom:72px;width:390px;height:min(620px,calc(100dvh - 120px));display:flex;flex-direction:column;border:2px solid var(--ink);border-radius:22px;box-shadow:0 18px 60px #21244530;background:var(--paper);overflow:hidden}
+.ach-panel[hidden]{display:none!important}
+.ach-header{display:flex;align-items:center;gap:11px;padding:17px 16px;background:var(--ink);color:var(--light);flex-shrink:0}
+.ach-emblem{display:grid;place-items:center;width:37px;height:37px;border-radius:0 18px 0 0;background:var(--amber);color:var(--ink)}
+.ach-emblem svg{width:25px;height:25px}
+.ach-heading{margin-right:auto}
+.ach-heading h2{font:800 18px/1.2 var(--display);letter-spacing:0}
+.ach-heading p{font-size:10px;line-height:1.4;margin-top:4px;color:#e7ecf0}
+#academy-chat .ach-header button{display:grid;place-items:center;width:34px;height:36px;border-radius:50%;color:var(--light);flex-shrink:0;font-size:22px}
+#academy-chat .ach-header button:hover{background:#ffffff20}
+.ach-questions{padding:12px 14px 10px;display:flex;gap:7px;flex-wrap:wrap;border-bottom:1px solid #21244520;flex-shrink:0}
+#academy-chat .ach-questions button{padding:6px 10px;min-height:32px;border:1px solid var(--ink);border-radius:999px;font-size:11px;background:var(--light)}
+#academy-chat .ach-questions button:hover{background:var(--amber)}
+.ach-messages{padding:15px;flex:1;min-height:64px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.ach-message{max-width:95%;padding:12px 13px;border-radius:0 15px 15px 15px;background:var(--light);margin:0 0 13px;border:1px solid #21244516;overflow-wrap:anywhere}
+.ach-message p{font-size:13px;line-height:1.65;white-space:pre-wrap}
+.ach-who{display:block;font:700 10px/1.4 var(--display);margin-bottom:5px}
+.ach-message small{display:block;font-size:9px;line-height:1.5;color:#575a71;margin-top:8px}
+.ach-message>a{display:inline-block;font-size:11px;font-weight:600;margin-top:10px;text-underline-offset:3px}
+.ach-user{margin-left:auto;background:var(--amber);border-radius:15px 0 15px 15px}
+.ach-ai{border-top:1px solid #21244525;border-bottom:1px solid #21244525;padding:9px 15px;flex-shrink:1;min-height:36px;max-height:min(220px,35dvh);overflow:auto;overscroll-behavior:contain;background:#ffffff40}
+.ach-ai summary{font-size:11px;font-weight:600;cursor:pointer;padding:2px 0}
+.ach-ai p{font-size:10px;line-height:1.55;margin-top:7px}
+#academy-chat .ach-retry{padding:8px 12px;min-height:36px;margin-top:9px;border-radius:999px;color:var(--light);background:var(--ink);font-size:11px}
+#academy-chat .ach-retry:disabled{opacity:.65;cursor:default}
+.ach-ai [hidden]{display:none!important}
+.ach-form{display:flex;gap:8px;align-items:end;padding:12px 13px 7px;flex-shrink:0}
+.ach-form textarea{resize:none;min-height:44px;max-height:90px;flex:1;min-width:0;border:1px solid var(--ink);border-radius:14px;padding:11px 12px;font:400 13px/1.5 var(--text);background:var(--light);color:var(--ink)}
+.ach-form textarea:disabled{opacity:.65}
+#academy-chat .ach-send{min-height:44px;min-width:62px;background:var(--ink);color:var(--light);padding:11px 13px;border-radius:999px;font-size:12px}
+.ach-footer{padding:0 15px 11px;font-size:9px;line-height:1.5;color:#595c72;flex-shrink:0}
+#academy-chat :focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+@media(prefers-reduced-motion:no-preference){.ach-panel:not([hidden]){animation:chat-arrive .25s cubic-bezier(.2,0,0,1)}@keyframes chat-arrive{from{opacity:.5;transform:translateY(10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}}
+@media(max-width:480px){#academy-chat{right:14px;bottom:max(14px,env(safe-area-inset-bottom))}.ach-panel{position:fixed;left:14px;right:14px;width:auto;bottom:calc(max(14px,env(safe-area-inset-bottom)) + 68px);height:min(620px,calc(100dvh - 108px));border-radius:18px}.ach-header{padding:14px 12px}.ach-heading h2{font-size:17px}.ach-message p{font-size:13px}.ach-form textarea{font-size:16px}.ach-messages{padding:12px}.ach-questions{padding:10px 11px}.ach-launcher>span{font-size:13px}#academy-chat .ach-launcher{min-height:52px;padding:12px 17px}}
