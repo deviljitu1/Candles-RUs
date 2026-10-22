@@ -4,7 +4,7 @@ body:has(#nl-badge-frame) #academy-chat{--ach-offset:52px}
 #academy-chat .ach-launcher{display:flex;align-items:center;gap:10px;min-height:56px;padding:14px 21px;background:var(--ink);color:var(--light);border:2px solid var(--amber);border-radius:999px;box-shadow:0 5px 18px #21244530;transition:transform .2s ease-out,background .2s}
 #academy-chat .ach-launcher:hover{background:#30345d;transform:translateY(-2px)}
 .ach-launcher svg{width:25px;height:25px;color:var(--amber)}
-.ach-panel{position:absolute;right:0;bottom:72px;width:390px;height:min(620px,calc(100dvh - 120px));display:flex;flex-direction:column;border:2px solid var(--ink);border-radius:22px;box-shadow:0 18px 60px #21244530;background:var(--paper);overflow:hidden}
+.ach-panel{position:absolute;right:0;bottom:72px;width:390px;height:min(620px,calc(100dvh - 120px - var(--ach-offset,0px)));display:flex;flex-direction:column;border:2px solid var(--ink);border-radius:22px;box-shadow:0 18px 60px #21244530;background:var(--paper);overflow:hidden}
 .ach-panel[hidden]{display:none!important}
 .ach-header{display:flex;align-items:center;gap:11px;padding:17px 16px;background:var(--ink);color:var(--light);flex-shrink:0}
 .ach-emblem{display:grid;place-items:center;width:37px;height:37px;border-radius:0 18px 0 0;background:var(--amber);color:var(--ink)}
